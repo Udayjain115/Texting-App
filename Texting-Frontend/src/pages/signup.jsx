@@ -111,6 +111,10 @@ const signup = () => {
             {errorNotification && (
               <div className="alert alert-danger">{errorNotification}</div>
             )}
+          </div>
+        </Row>
+        <Row>
+          <div className="d-inline d-flex justify-content-center mt-2">
             <p>
               Already Have An Account?{' '}
               <Link

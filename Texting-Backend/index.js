@@ -31,7 +31,7 @@ app.post('/api/users', async (request, response) => {
 
   if (!body.email || !body.password || !body.firstName) {
     return response.status(400).json({
-      error: 'missing email, password or firstName',
+      error: 'Email, password and name are required',
     });
   }
 
@@ -39,7 +39,7 @@ app.post('/api/users', async (request, response) => {
 
   if (users.find((user) => user.email === body.email)) {
     return response.status(400).json({
-      error: 'email must be unique',
+      error: 'User with this email already exists',
     });
   }
 
