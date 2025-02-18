@@ -4,7 +4,11 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import userService from '../services/userService';
 const signup = () => {
-  const handleSubmit = (e) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [errorNotification, setErrorNotification] = useState(null);
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const User = {
       email,
@@ -14,13 +18,19 @@ const signup = () => {
     console.log(User);
     console.log('submitted');
 
-    userService.create(User).then((response) => {
-      console.log(response);
-    });
+    userService
+      .create(User)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        setErrorNotification(error.response.data.error);
+
+        setTimeout(() => {
+          setErrorNotification(null);
+        }, 5000);
+      });
   };
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
   const fields = [
     { label: 'Email', type: 'email', name: 'email', value: email },
     {
@@ -98,6 +108,9 @@ const signup = () => {
         </Row>
         <Row>
           <div className="d-inline d-flex justify-content-center mt-2">
+            {errorNotification && (
+              <div className="alert alert-danger">{errorNotification}</div>
+            )}
             <p>
               Already Have An Account?{' '}
               <Link
