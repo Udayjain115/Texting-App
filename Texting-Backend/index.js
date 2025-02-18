@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const User = require('./models/userDetails');
 const bcrypt = require('bcrypt');
 const app = express();
 const port = 3000;
@@ -16,8 +17,13 @@ async function hashPassword(password) {
   return hashPassword;
 }
 
-app.get('/api/users', (request, response) => {
-  response.json(users);
+app.get('/api/users', async (request, response) => {
+  try {
+    const users = await User.find({});
+    response.json(users);
+  } catch (error) {
+    response.status(500).json({ error: error.message });
+  }
 });
 
 app.post('/api/users', async (request, response) => {
@@ -29,6 +35,8 @@ app.post('/api/users', async (request, response) => {
     });
   }
 
+  const users = await User.find({});
+
   if (users.find((user) => user.email === body.email)) {
     return response.status(400).json({
       error: 'email must be unique',
@@ -37,14 +45,19 @@ app.post('/api/users', async (request, response) => {
 
   const hashedPw = await hashPassword(body.password);
 
-  const User = {
+  const user = new User({
+    firstName: body.firstName,
     email: body.email,
     password: hashedPw,
-    firstName: body.firstName,
-  };
+  });
 
-  users = users.concat(User);
-  response.json(User);
+  try {
+    const savedUser = await user.save();
+    users = users.concat(savedUser);
+    response.json(savedUser);
+  } catch (error) {
+    response.status(400).json({ error: error.message });
+  }
 });
 
 app.listen(port, () => {
