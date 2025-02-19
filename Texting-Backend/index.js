@@ -1,7 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const User = require('./models/userDetails');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const User = require('./models/userDetails');
+
 const app = express();
 const port = 3000;
 
@@ -14,6 +17,33 @@ async function hashPassword(password) {
 
   return hashPassword;
 }
+
+app.post('/api/login', async (request, response) => {
+  try {
+    const { email, password } = request.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return response.status(401).json({ error: 'Invalid email or password' });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return response.status(401).json({ error: 'Invalid email or password' });
+    }
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '1h',
+    });
+
+    response.json({
+      token,
+      user: { id: user._id, email: user.email, firstName: user.firstName },
+    });
+  } catch (error) {
+    response.status(500).json({ error: error.message });
+  }
+});
 
 app.get('/api/users', async (request, response) => {
   try {
