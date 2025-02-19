@@ -24,6 +24,15 @@ app.get('/api/users', async (request, response) => {
   }
 });
 
+app.get('/api/users/:email', async (request, response) => {
+  try {
+    const user = await User.findOne({ email: request.params.email });
+    response.json(user);
+  } catch (error) {
+    response.status(500).json({ error: error.message });
+  }
+});
+
 app.post('/api/users', async (request, response) => {
   const body = request.body;
 
