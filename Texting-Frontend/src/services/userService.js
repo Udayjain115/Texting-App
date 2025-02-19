@@ -19,4 +19,12 @@ const getOne = (id) => {
   return axios.get(`${baseUrl}/${id}`).then((response) => response.data);
 };
 
-export default { getAll, create, update, getOne };
+const login = (credentials) => {
+  return axios
+    .post('http://localhost:3000/api/login', credentials, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+    .then((response) => response.data);
+};
+
+export default { getAll, create, update, getOne, login };
