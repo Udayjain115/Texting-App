@@ -5,8 +5,6 @@ const bcrypt = require('bcrypt');
 const app = express();
 const port = 3000;
 
-let users = [];
-
 app.use(cors());
 app.use(express.json());
 
@@ -35,7 +33,7 @@ app.post('/api/users', async (request, response) => {
     });
   }
 
-  const users = await User.find({});
+  let users = await User.find({});
 
   if (users.find((user) => user.email === body.email)) {
     return response.status(400).json({
@@ -43,7 +41,7 @@ app.post('/api/users', async (request, response) => {
     });
   }
 
-  const hashedPw = await hashPassword(body.password);
+  let hashedPw = await hashPassword(body.password);
 
   const user = new User({
     firstName: body.firstName,

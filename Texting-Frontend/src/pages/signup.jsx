@@ -3,7 +3,9 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import userService from '../services/userService';
+import { useNavigate } from 'react-router-dom';
 const signup = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -22,9 +24,19 @@ const signup = () => {
       .create(User)
       .then((response) => {
         console.log(response);
+        navigate('/');
       })
       .catch((error) => {
-        setErrorNotification(error.response.data.error);
+        console.log(error, 'error');
+        if (
+          error.response.status &&
+          error.response.status === 400 &&
+          error.response.data.error
+        ) {
+          setErrorNotification(error.response.data.error);
+        } else {
+          setErrorNotification('An error occurred');
+        }
 
         setTimeout(() => {
           setErrorNotification(null);
