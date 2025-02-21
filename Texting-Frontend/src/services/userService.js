@@ -27,4 +27,25 @@ const login = (credentials) => {
     .then((response) => response.data);
 };
 
-export default { getAll, create, update, getOne, login };
+const getUserById = async (id) => {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return null;
+    }
+    const response = await axios.get(`${baseUrl}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 403) {
+      // Token expired or invalid
+      localStorage.removeItem('token'); // Clear the invalid token
+      throw new Error('Session expired. Please login again.');
+    }
+    throw error;
+  }
+};
+export default { getAll, create, update, getOne, login, getUserById };

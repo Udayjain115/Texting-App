@@ -9,7 +9,7 @@ import { AuthContext } from '../context/AuthContext';
 import { jwtDecode } from 'jwt-decode';
 const login = () => {
   const navigate = useNavigate();
-  const { setUser, setIsLoggedIn } = useContext(AuthContext);
+  const { setUser, setIsLoggedIn, user } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorNotification, setErrorNotification] = useState(null);
@@ -26,13 +26,12 @@ const login = () => {
     try {
       const data = await userService.login({ email, password });
       const decoded = jwtDecode(data.token);
-      setUser(decoded);
-      setIsLoggedIn(true);
-
-      console.log(data);
-
       localStorage.setItem('token', data.token);
+      const userData = await userService.getUserById(decoded.id);
+      setUser(userData);
+      setIsLoggedIn(true);
       navigate('/');
+      console.log('User Data:', userData);
     } catch (error) {
       console.log(error);
       setErrorNotification('Invalid email or password');

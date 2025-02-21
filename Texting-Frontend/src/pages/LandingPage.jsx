@@ -34,18 +34,22 @@ const LandingPage = () => {
               handleClick={handleLoginOrLogout}
             />
           </div>
-          <div className="">
-            <ModernButton
-              text="Join"
-              handleClick={handleSignUp}
-            />
-          </div>
+          {!isLoggedIn && (
+            <div className="">
+              <ModernButton
+                text="Sign Up"
+                handleClick={handleSignUp}
+              />
+            </div>
+          )}
         </Col>
       </Row>
       <Row>
         <Col>
           {isLoggedIn && (
-            <h1 className="text-center mt-5">Welcome to Texting App</h1>
+            <h1 className="text-center mt-5">
+              {`Welcome to Texting App ${user.firstName}`}{' '}
+            </h1>
           )}
         </Col>
       </Row>

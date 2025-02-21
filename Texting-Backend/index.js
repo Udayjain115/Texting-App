@@ -18,6 +18,37 @@ async function hashPassword(password) {
   return hashPassword;
 }
 
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+
+  if (!token) {
+    return res.status(401).json({ error: 'Access token required' });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) {
+      return res.status(403).json({ error: 'Invalid or expired token' });
+    }
+    req.user = user; // Attach decoded user info to request
+    next(); // Proceed to the next middleware/route handler
+  });
+};
+
+app.get('/api/users/:id', authenticateToken, async (request, response) => {
+  try {
+    const user = await User.findById(request.params.id);
+    if (!user) {
+      return response.status(404).json({ error: 'User not found' });
+    }
+
+    const { password, ...userWithoutPassword } = user.toObject();
+    response.json(userWithoutPassword);
+  } catch (error) {
+    response.status(500).json({ error: error.message });
+  }
+});
+
 app.post('/api/login', async (request, response) => {
   try {
     const { email, password } = request.body;
