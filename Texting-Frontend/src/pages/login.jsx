@@ -4,8 +4,12 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import userService from '../services/userService';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import { jwtDecode } from 'jwt-decode';
 const login = () => {
   const navigate = useNavigate();
+  const { setUser, setIsLoggedIn } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorNotification, setErrorNotification] = useState(null);
@@ -21,6 +25,10 @@ const login = () => {
 
     try {
       const data = await userService.login({ email, password });
+      const decoded = jwtDecode(data.token);
+      setUser(decoded);
+      setIsLoggedIn(true);
+
       console.log(data);
 
       localStorage.setItem('token', data.token);

@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ModernButton from '../components/ModernButton';
 import { Row, Col, Container } from 'react-bootstrap';
-import { Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const LandingPage = () => {
+  const { isLoggedIn, logout, user } = useContext(AuthContext);
+  console.log(user);
   const navigate = useNavigate();
-  const handleLogin = () => {
-    navigate('/login');
+
+  const handleLoginOrLogout = () => {
+    if (isLoggedIn) {
+      logout();
+    } else {
+      navigate('/login');
+    }
   };
 
   const handleSignUp = () => {
@@ -23,8 +30,8 @@ const LandingPage = () => {
           role="toolbar">
           <div className="">
             <ModernButton
-              text="Login"
-              handleClick={handleLogin}
+              text={isLoggedIn ? 'Logout' : 'Login'}
+              handleClick={handleLoginOrLogout}
             />
           </div>
           <div className="">
@@ -33,6 +40,13 @@ const LandingPage = () => {
               handleClick={handleSignUp}
             />
           </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          {isLoggedIn && (
+            <h1 className="text-center mt-5">Welcome to Texting App</h1>
+          )}
         </Col>
       </Row>
     </Container>
