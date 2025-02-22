@@ -3,57 +3,28 @@ import ModernButton from '../components/ModernButton';
 import { Row, Col, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { jwtDecode } from 'jwt-decode';
+import Header from '../components/Header';
+import MessageInput from '../components/MessageInput';
 
 const LandingPage = () => {
   const { isLoggedIn, logout, user } = useContext(AuthContext);
-  console.log(user);
+  console.log({ user });
   const navigate = useNavigate();
 
-  const handleLoginOrLogout = () => {
-    if (isLoggedIn) {
-      logout();
-    } else {
-      navigate('/login');
-    }
+  const handleSendMessage = (message) => {
+    // Handle sending message logic here
+    console.log('Sending message:', message);
   };
 
-  const handleSignUp = () => {
-    navigate('/signup');
-  };
   return (
-    // updated from Container to Container fluid so that the row takes up the full width of the container
-    <Container fluid>
-      <Row>
-        <Col
-          // Used Button Group to group the buttons together, gap to give them a gap
-          className="btn-group d-flex justify-content-end gap-4 mt-3"
-          role="toolbar">
-          <div className="">
-            <ModernButton
-              text={isLoggedIn ? 'Logout' : 'Login'}
-              handleClick={handleLoginOrLogout}
-            />
-          </div>
-          {!isLoggedIn && (
-            <div className="">
-              <ModernButton
-                text="Sign Up"
-                handleClick={handleSignUp}
-              />
-            </div>
-          )}
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          {isLoggedIn && (
-            <h1 className="text-center mt-5">
-              {`Welcome to Texting App ${user.firstName}`}{' '}
-            </h1>
-          )}
-        </Col>
-      </Row>
-    </Container>
+    <>
+      <Header />
+      <div className="chat-window">
+        {/* Messages list component */}
+        <MessageInput onSendMessage={handleSendMessage} />
+      </div>
+    </>
   );
 };
 

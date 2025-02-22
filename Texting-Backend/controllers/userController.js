@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const createUser = async (req, res) => {
   const { email, password, firstName } = req.body;
 
-  if (email || !password || !firstName) {
+  if (!email || !password || !firstName) {
     return res.status(400).json({
       error: 'Email, password and name are required',
     });

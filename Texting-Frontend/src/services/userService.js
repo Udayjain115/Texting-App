@@ -21,7 +21,7 @@ const getOne = (id) => {
 
 const login = (credentials) => {
   return axios
-    .post('http://localhost:3000/api/login', credentials, {
+    .post('http://localhost:3000/api/auth/login', credentials, {
       headers: { 'Content-Type': 'application/json' },
     })
     .then((response) => response.data);

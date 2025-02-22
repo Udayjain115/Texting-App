@@ -126,7 +126,7 @@ const login = () => {
             <p>
               Dont Have An Account?{' '}
               <Link
-                to="/login"
+                to="/signup"
                 className="text-decoration-none text-btn">
                 <span className="lead fw-bold ">Create One Here</span>
               </Link>

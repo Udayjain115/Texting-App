@@ -39,8 +39,8 @@ const StyledWrapper = styled.div`
     background-color: #e0e0e0;
     border-radius: 100px;
     font-weight: 600;
-    color: #9b59b6; /* updated from greenyellow */
-    box-shadow: 0 0 0 2px #9b59b6; /* updated from greenyellow */
+    color: #212529; /* updated from greenyellow */
+    box-shadow: 0 0 0 2px #212529; /* updated from greenyellow */
     cursor: pointer;
     overflow: hidden;
     transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
@@ -49,7 +49,7 @@ const StyledWrapper = styled.div`
   .animated-button svg {
     position: absolute;
     width: 24px;
-    fill: #9b59b6; /* updated from greenyellow */
+    fill: #212529; /* updated from greenyellow */
     z-index: 9;
     transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
   }
@@ -69,7 +69,7 @@ const StyledWrapper = styled.div`
     transform: translate(-50%, -50%);
     width: 20px;
     height: 20px;
-    background-color: #9b59b6; /* updated from greenyellow */
+    background-color: #ffffff; /* updated from greenyellow */
     border-radius: 50%;
     opacity: 0;
     transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
@@ -84,7 +84,7 @@ const StyledWrapper = styled.div`
 
   .animated-button:hover {
     box-shadow: 0 0 0 12px transparent;
-    color: black; /* updated hover color */
+    color: #212529; /* updated hover color */
     border-radius: 12px;
   }
 
@@ -101,12 +101,12 @@ const StyledWrapper = styled.div`
   }
 
   .animated-button:hover svg {
-    fill: black; /* updated hover fill color */
+    fill: #212529; /* updated hover fill color */
   }
 
   .animated-button:active {
     scale: 0.95;
-    box-shadow: 0 0 0 4px #9b59b6; /* updated from greenyellow */
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.5); /* updated from greenyellow */
   }
 
   .animated-button:hover .circle {
