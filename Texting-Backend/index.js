@@ -1,12 +1,18 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const http = require('http');
 const connectDB = require('./config/connectDB');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/userRoutes');
+const port = 3000;
+const configureSocket = require('./Socket/socket');
+
 const app = express();
 
-const port = 3000;
+// Create ONE server that both Express and Socket.IO will use
+const server = http.createServer(app);
+configureSocket(server);
 
 connectDB();
 
@@ -24,6 +30,6 @@ app.use((error, request, response, next) => {
   response.status(500).send('Something went wrong');
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });

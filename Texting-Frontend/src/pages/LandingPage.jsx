@@ -26,12 +26,14 @@ const LandingPage = () => {
   return (
     <div className="d-flex flex-column vh-100">
       <Header />
-      <div className="flex-grow-1 position-relative">
-        <MessageList messages={messages} />
-        <div className="position-absolute bottom-0 w-100">
-          <MessageInput onSendMessage={handleSendMessage} />
+      {isLoggedIn && (
+        <div className="flex-grow-1 position-relative">
+          <MessageList messages={messages} />
+          <div className="position-absolute bottom-0 w-100">
+            <MessageInput onSendMessage={handleSendMessage} />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
