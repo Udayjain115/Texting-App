@@ -29,7 +29,7 @@ const MessageInput = ({ onSendMessage }) => {
   }, [message]);
 
   return (
-    <StyledWrapper>
+    <>
       <form
         onSubmit={handleSubmit}
         className="message-form">
@@ -48,65 +48,8 @@ const MessageInput = ({ onSendMessage }) => {
           <IoSend />
         </button>
       </form>
-    </StyledWrapper>
+    </>
   );
 };
-
-const StyledWrapper = styled.div`
-  .message-form {
-    display: flex;
-    align-items: flex-end;
-    gap: 10px;
-    padding: 15px;
-    background: #f8f9fa;
-    border-top: 1px solid #dee2e6;
-  }
-
-  textarea {
-    flex: 1;
-    padding: 12px;
-    border: 1px solid #dee2e6;
-    border-radius: 20px;
-    resize: none;
-    max-height: 150px;
-    font-size: 0.95rem;
-    line-height: 1.4;
-    outline: none;
-    transition: border-color 0.2s;
-
-    &:focus {
-      border-color: #212529;
-    }
-  }
-
-  .send-button {
-    background: #212529;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s;
-
-    &:hover {
-      background: #343a40;
-      transform: scale(1.05);
-    }
-
-    &:disabled {
-      background: #e9ecef;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    svg {
-      font-size: 1.2rem;
-    }
-  }
-`;
 
 export default MessageInput;

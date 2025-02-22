@@ -1,5 +1,142 @@
 body {
   margin: 0;
   background-color: #212121;
-  color: #fff; /* optional: adjust global text color */
+  color: #fff;
+}
+
+/* Message List Styles */
+.messages-container {
+  padding: 20px;
+  overflow-y: auto;
+  height: calc(100vh - 140px);
+  background: #212529;
+}
+
+.messages-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+  background: #343a40;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  background: #6c757d;
+  border-radius: 3px;
+}
+
+.message {
+  display: flex;
+  margin-bottom: 16px;
+}
+
+.message.sent {
+  justify-content: flex-end;
+}
+
+.message.sent .message-content {
+  background: #0d6efd;
+  border-radius: 15px 15px 0 15px;
+}
+
+.message.received {
+  justify-content: flex-start;
+}
+
+.message.received .message-content {
+  background: #343a40;
+  border-radius: 15px 15px 15px 0;
+}
+
+.message-content {
+  max-width: 70%;
+  padding: 10px 15px;
+  position: relative;
+}
+
+.message-content p {
+  margin: 0;
+  color: #fff;
+  font-size: 0.95rem;
+  word-wrap: break-word;
+}
+
+.message-content .timestamp {
+  display: block;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 4px;
+  text-align: right;
+}
+
+/* Message Input Styles */
+.message-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  padding: 15px;
+  background: #212529;
+  border-top: 1px solid #343a40;
+}
+
+.message-form textarea {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #343a40;
+  border-radius: 20px;
+  resize: none;
+  max-height: 150px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  outline: none;
+  transition: all 0.3s ease;
+  background: #2c3034;
+  color: #ffffff;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.message-form textarea::-webkit-scrollbar {
+  display: none;
+}
+
+.message-form textarea::placeholder {
+  color: #6c757d;
+}
+
+.message-form textarea:focus {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.send-button {
+  background: transparent;
+  color: white;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.send-button:hover {
+  background: #ffffff;
+  color: #212529;
+  transform: scale(1.05);
+}
+
+.send-button:disabled {
+  background: transparent;
+  border-color: #6c757d;
+  color: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.send-button svg {
+  font-size: 1.2rem;
 }

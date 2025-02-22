@@ -6,25 +6,33 @@ import { AuthContext } from '../context/AuthContext';
 import { jwtDecode } from 'jwt-decode';
 import Header from '../components/Header';
 import MessageInput from '../components/MessageInput';
+import MessageList from '../components/MessageList';
+import { useState } from 'react';
 
 const LandingPage = () => {
   const { isLoggedIn, logout, user } = useContext(AuthContext);
-  console.log({ user });
   const navigate = useNavigate();
+  const [messages, setMessages] = useState([]);
 
   const handleSendMessage = (message) => {
-    // Handle sending message logic here
-    console.log('Sending message:', message);
+    const newMessage = {
+      text: message,
+      senderId: user.id,
+      timestamp: new Date().toISOString(),
+    };
+    setMessages([...messages, newMessage]);
   };
 
   return (
-    <>
+    <div className="d-flex flex-column vh-100">
       <Header />
-      <div className="chat-window">
-        {/* Messages list component */}
-        <MessageInput onSendMessage={handleSendMessage} />
+      <div className="flex-grow-1 position-relative">
+        <MessageList messages={messages} />
+        <div className="position-absolute bottom-0 w-100">
+          <MessageInput onSendMessage={handleSendMessage} />
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 
