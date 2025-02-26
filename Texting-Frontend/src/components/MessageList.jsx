@@ -21,7 +21,7 @@ const MessageList = ({ messages = [] }) => {
           <div
             key={index}
             className={`message ${
-              message.senderId === user?.id ? 'sent' : 'received'
+              message.senderId === user?._id ? 'sent' : 'received'
             }`}>
             <div className="message-content">
               <p>{message.text}</p>

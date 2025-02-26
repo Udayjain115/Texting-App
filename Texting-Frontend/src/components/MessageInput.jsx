@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { IoSend } from 'react-icons/io5';
+import { SocketContext } from '../context/SocketContext';
 
 const MessageInput = ({ onSendMessage }) => {
   const [message, setMessage] = useState('');

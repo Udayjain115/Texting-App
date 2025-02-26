@@ -13,6 +13,10 @@ const configureSocket = (server) => {
     socket.on('disconnect', () => {
       console.log('User disconnected:', socket.id);
     });
+
+    socket.on('message', (message) => {
+      socket.broadcast.emit('message', message);
+    });
   });
 
   return io;
