@@ -32,8 +32,11 @@ const Header = () => {
           <Nav className="me-auto">
             {isLoggedIn && (
               <>
-                <Nav.Link href="/chat">Messages</Nav.Link>
-                <Nav.Link href="/profile">Profile</Nav.Link>
+                <Nav.Link
+                  as={Link}
+                  to="/profile">
+                  Profile
+                </Nav.Link>
               </>
             )}
           </Nav>

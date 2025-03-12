@@ -4,6 +4,13 @@ body {
   color: #fff;
 }
 
+.profile-image {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 100%;
+}
+
 /* Message List Styles */
 .messages-container {
   padding: 20px;

@@ -21,12 +21,12 @@ const MessageList = ({ messages = [] }) => {
           <div
             key={index}
             className={`message ${
-              message.senderId === user?._id ? 'sent' : 'received'
+              message.sender === user?._id ? 'sent' : 'received'
             }`}>
             <div className="message-content">
-              <p>{message.text}</p>
+              <p>{message.message}</p>
               <span className="timestamp">
-                {new Date(message.timestamp).toLocaleTimeString([], {
+                {new Date(message.date).toLocaleTimeString([], {
                   hour: '2-digit',
                   minute: '2-digit',
                 })}

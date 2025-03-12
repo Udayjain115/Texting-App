@@ -7,6 +7,9 @@ import MessageList from '../components/MessageList';
 import { useState } from 'react';
 import { SocketContext } from '../context/SocketContext';
 import { useEffect } from 'react';
+import messageService from '../services/messageService';
+import userService from '../services/userService';
+
 const LandingPage = () => {
   const { isLoggedIn, logout, user } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -16,6 +19,11 @@ const LandingPage = () => {
   useEffect(() => {
     console.log('Messages:', messages);
   }, [messages]);
+
+  useEffect(() => {
+    console.log('Hi');
+    getMessages();
+  }, []);
 
   useEffect(() => {
     if (socket) {
@@ -31,16 +39,29 @@ const LandingPage = () => {
     }
   }, [socket]);
 
-  const handleSendMessage = (message) => {
+  const getMessages = async () => {
+    try {
+      const messages = await messageService.getAll();
+      setMessages(messages);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleSendMessage = async (message) => {
     const newMessage = {
-      text: message,
-      senderId: user._id,
-      timestamp: new Date().toISOString(),
+      message: message,
+      sender: user._id,
+      date: new Date().toISOString(),
     };
 
-    socket.emit('message', newMessage);
-
-    setMessages((prevMessages) => [...prevMessages, newMessage]);
+    try {
+      socket.emit('message', newMessage);
+      const savedMessage = await messageService.create(newMessage);
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+    } catch (error) {
+      console.error('Error Saving Message');
+      console.log(error);
+    }
   };
 
   const handleReceiveMessage = (message) => {

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { SocketProvider } from './context/SocketContext';
 import Signup from './pages/signup';
 import Login from './pages/login';
+import Profile from './pages/profile';
 
 import LandingPage from './pages/LandingPage';
 
@@ -13,6 +14,9 @@ function App() {
       <SocketProvider>
         <Router>
           <Routes>
+            <Route
+              path="/profile"
+              element={<Profile />}></Route>
             <Route
               path="/login"
               element={<Login />}></Route>

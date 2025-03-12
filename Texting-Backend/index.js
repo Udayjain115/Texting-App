@@ -5,6 +5,7 @@ const http = require('http');
 const connectDB = require('./config/connectDB');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/userRoutes');
+const messageRoutes = require('./routes/messageRoutes');
 const port = 3000;
 const configureSocket = require('./Socket/socket');
 
@@ -23,6 +24,7 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/messages', messageRoutes);
 
 // Error handler
 app.use((error, request, response, next) => {
